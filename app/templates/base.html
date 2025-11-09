@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bus Depot Management System{% endblock %}</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <!-- Extra CSS Block -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('home.index') }}">
+                <i class="bi bi-bus-front"></i>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint and request.endpoint.startswith('home') %}active{% endif %}" href="{{ url_for('home.index') }}">
+                            {{ t('home') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint and request.endpoint.startswith('buses') %}active{% endif %}" href="{{ url_for('buses.list_buses') }}">
+                            <span class="color-indicator" style="background-color: #28a745;"></span> {{ t('buses') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint and request.endpoint.startswith('routes') %}active{% endif %}" href="{{ url_for('routes.list_routes') }}">
+                            <span class="color-indicator" style="background-color: #ffc107;"></span> {{ t('routes') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint and request.endpoint.startswith('schedules') %}active{% endif %}" href="{{ url_for('schedules.list_schedules') }}">
+                            <span class="color-indicator" style="background-color: #007bff;"></span> {{ t('schedules') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint and request.endpoint.startswith('crew') %}active{% endif %}" href="{{ url_for('crew.list_crew') }}">
+                            <span class="color-indicator" style="background-color: #fd7e14;"></span> {{ t('crew') }}
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if request.endpoint and request.endpoint.startswith('dashboard') %}active{% endif %}" href="#" id="dashboardDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="color-indicator" style="background-color: #20c997;"></span> {{ t('dashboard') }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('dashboard.index') }}"><i class="bi bi-bar-chart"></i> {{ t('analytics') }}</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('dashboard.operator_dashboard') }}"><i class="bi bi-broadcast"></i> {{ t('live_tracking') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('dashboard.user_dashboard') }}"><i class="bi bi-geo-alt"></i> {{ t('track_bus') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('dashboard.live_demo') }}"><i class="bi bi-play-circle"></i> {{ t('live_demo') }}</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint and request.endpoint.startswith('reports') %}active{% endif %}" href="{{ url_for('reports.index') }}">
+                            <span class="color-indicator" style="background-color: #6f42c1;"></span> {{ t('reports') }}
+                        </a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <div class="btn-group" role="group">
+                            <a href="{{ url_for('set_language', lang='en') }}" class="btn btn-sm {% if current_lang == 'en' %}btn-primary{% else %}btn-outline-light{% endif %}">
+                                EN
+                            </a>
+                            <a href="{{ url_for('set_language', lang='mr') }}" class="btn btn-sm {% if current_lang == 'mr' %}btn-primary{% else %}btn-outline-light{% endif %}">
+                                मराठी
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block hero_banner %}
+<section class="hero-banner">
+    <div class="hero-image-container">
+        <img src="{{ url_for('static', filename='images/bus-hero.jpg') }}" alt="PMPML Bus" class="hero-image">
+        <div class="hero-overlay">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">{{ t('bus_depot_management') }}</h1>
+                    <p class="hero-subtitle">{{ t('real_time_tracking_system') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mt-4 mb-5">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">Bus Depot Management System &copy; 2025</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

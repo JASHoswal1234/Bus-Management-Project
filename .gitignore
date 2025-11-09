@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Byte-compiled cache
+*.pyc
+
+# SQLite DB (optional)
+*.db
+*.sqlite3
+
+# Local settings
+.env
+.env.*
