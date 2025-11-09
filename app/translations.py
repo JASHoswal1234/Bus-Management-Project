@@ -11,6 +11,15 @@ TRANSLATIONS = {
         'dashboard': 'Dashboard',
         'reports': 'Reports',
 
+        # Home cards / buttons
+        'manage_buses': 'Manage Buses',
+        'manage_routes': 'Manage Routes',
+        'manage_schedules': 'Manage Schedules',
+        'manage_crew': 'Manage Crew',
+        'view_dashboard': 'View Dashboard',
+        'view_reports': 'View Reports',
+
+
         # Dashboard dropdown
         'analytics': 'Analytics',
         'live_tracking': 'Live Tracking (Operator)',
@@ -133,6 +142,15 @@ TRANSLATIONS = {
         'crew': 'कर्मचारी',
         'dashboard': 'डॅशबोर्ड',
         'reports': 'अहवाल',
+
+        # Home cards / buttons
+        'manage_buses': 'बस व्यवस्थापित करा',
+        'manage_routes': 'मार्ग व्यवस्थापित करा',
+        'manage_schedules': 'वेळापत्रके व्यवस्थापित करा',
+        'manage_crew': 'कर्मचारी व्यवस्थापित करा',
+        'view_dashboard': 'डॅशबोर्ड पहा',
+        'view_reports': 'अहवाल पहा',
+
 
         # Dashboard dropdown
         'analytics': 'विश्लेषण',
